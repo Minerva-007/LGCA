@@ -3,6 +3,7 @@
 #include"string.h"
 #include"windows.h"
 #include"windowsx.h"
+
 /*
 
 */
@@ -69,10 +70,7 @@ class SimulationManager{
 		HBITMAP _hbmp;
 		HPEN hpen;
 	public:
-		SimulationManager()
-		{
-			
-		}
+		SimulationManager(){}
 		SimulationManager(HWND hwnd)
 		{
 			turn=0;
@@ -100,6 +98,14 @@ class SimulationManager{
 			for(int i=0;i<32;i++)
 			{
 				COLORMAP[i] = RAWCOLORMAP[CELLCOLOR[i]];
+			}
+			// Initialize grid
+			for(int x=0;x<WIDTH;x++)
+			{
+				for(int y=0;y<HEIGHT;y++)
+					{
+						Grid[turn%2][x][y] = 0;
+					}
 			}
 		}
 		
@@ -285,7 +291,7 @@ void CreateBoundary()
 	for(int i=10; i<590; i++)
 	{
 		sm->AddParticle(10, i, 16);
-		sm->AddParticle(790, i, 16);
+		sm->AddParticle(790, ((i<180||i>420)?i:0), 16);// Perforated outlet
 	}
 }
 
